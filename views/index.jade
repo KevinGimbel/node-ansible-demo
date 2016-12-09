@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  code Welcome to the #{title}
+
+  p
+    code #{content}
+
+  h3 References
+  ul
+    each reference in references
+      li
+        a(href="#{reference.url}")
+          | #{reference.name}
