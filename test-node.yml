@@ -1,6 +1,6 @@
 ---
-- host: do
-  sudo: yes
+- hosts: do
+  become: sudo
 
   tasks:
 
@@ -9,7 +9,8 @@
     with_items:
       - git
       - nodejs
- 
+      - npm
+
   - name: create var/www/html directory
     file: dest=/var/www/html/ state=directory owner=root group=root mode=0700
 
@@ -21,4 +22,12 @@
     sudo: yes
     sudo_user: root
 
-    
+  - name: install dependencies
+    command: /usr/bin/npm install
+    args:
+      chdir: /var/www/html/
+
+  - name: start server
+    command: /usr/bin/nodejs ./bin/www
+    args:
+      chdir: /var/www/html/
